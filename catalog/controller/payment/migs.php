@@ -257,23 +257,11 @@ class ControllerPaymentMigs extends Controller {
    					if(strtoupper(md5($md5HashData)) == strtoupper($migs_vpc_SecureHash)){
 					    $this->model_payment_migs->logger('ORDER Successful: Order_id:'.$migs_transaction_id.' Reason: '.$migs_vpc_Message);
 					    $this->load->model('checkout/order');
-					    /*$commen  = "Credit Card Order Information" . "\n\n";
-						$commen .= "Order ID:".$order_id. "\n";
-						$commen .= "Reciept No:".$this->request->get['vpc_ReceiptNo']. "\n";
-						$commen .= "Transaction No:".$this->request->get['vpc_TransactionNo']. "\n\n";
-						$commen .= "Order Status:".$comment. "\n";*/
 						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 						$this->response->redirect($this->url->link('checkout/success'));    
 					} else {
 						$this->model_payment_migs->logger('ORDER FAIL: An error Occured:- Order_id:'.$migs_transaction_id.' Reason: '.$migs_vpc_Message);
-
-						/*$comment = "Transaction Failed: Security do not match, Possible tampering";
-						$this->load->model('checkout/order');
-					    $commen  = "Credit Card Order Information" . "\n\n";
-						$commen .= "Order ID:".$order_id. "\n";
-						$commen .= "Reciept No:".$this->request->get['vpc_ReceiptNo']. "\n";
-						$commen .= "Transaction No:".$this->request->get['vpc_TransactionNo']. "\n\n";
-						$commen .= "Order Status:".$comment. "\n";*/
+						
 						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 						$this->response->redirect($this->url->link('checkout/failure'));
 					}
